@@ -10,7 +10,6 @@
     "kndown": "knex: migrate:down",
     "seed": "knex: seed:run",
     "resetdb": "knex seed:run --specific=00-cleanup.js"
-
   },
   "repository": {
     "type": "git",
@@ -23,5 +22,7 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"}
+    "eslint": "^7.26.0",
+    "nodemon": "^2.0.7"
+  }
 }
