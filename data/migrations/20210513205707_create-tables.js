@@ -5,10 +5,22 @@ exports.up = function (knex) {
       tbl.string("recipe_name", 128).notNullable().unique();
       tbl.string("recipe_creation_date");
     })
+    .createTable("units", (tbl) => {
+      tbl.increments("unit_id");
+      tbl.string("unit_singular_name", 128).notNullable().unique();
+      tbl.string("unit_plural_name", 128).notNullable().unique();
+    })
     .createTable("ingredients", (tbl) => {
       tbl.increments("ingredient_id");
       tbl.string("ingredient_name", 128).notNullable().unique();
-      tbl.string("ingredient_unit", 128).notNullable();
+      tbl
+        .integer("unit_id")
+        .unsigned()
+        .notNullable()
+        .references("unit_id")
+        .inTable("units")
+        .onDelete("RESTRICT")
+        .onUpdate("CASCADE");
     })
     .createTable("steps", (tbl) => {
       tbl.increments("step_id");
