@@ -13,7 +13,7 @@ module.exports = {
     ...sharedConfig,
     client: "sqlite3",
     connection: {
-      filename: "./data/recipes",
+      filename: "./data/recipes.db3",
     },
   },
 };

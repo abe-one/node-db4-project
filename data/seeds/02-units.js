@@ -1,5 +1,5 @@
-exports.units = function (knex) {
-  knex("units").insert([
+exports.seed = function (knex) {
+  return knex("units").insert([
     {
       unit_singular_name: "cup",
       unit_plural_name: "cups",
