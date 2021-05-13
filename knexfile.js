@@ -10,6 +10,7 @@ const sharedConfig = {
 
 module.exports = {
   development: {
+    ...sharedConfig,
     client: "sqlite3",
     connection: {
       filename: "./data/recipes",
