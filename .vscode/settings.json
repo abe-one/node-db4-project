@@ -1,0 +1,21 @@
+{
+  "workbench.colorCustomizations": {
+    "editorGroup.border": "#ffe395",
+    "panel.border": "#ffe395",
+    "sideBar.border": "#ffe395",
+    "statusBar.background": "#ffd562",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#ffc72f",
+    "tab.activeBorder": "#ffe395",
+    "titleBar.activeBackground": "#ffd562",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#ffd56299",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#ffd562",
+  "cSpell.words": [
+    "kndown",
+    "knup",
+    "resetdb"
+  ]
+}
