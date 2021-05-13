@@ -2,7 +2,11 @@ exports.seed = function (knex) {
   return knex("ingredients").insert([
     {
       ingredient_name: "water",
-      // ingredient_unit:
+      unit_id: 1,
+    },
+    {
+      ingredient_name: "eggs",
+      unit_id: 2,
     },
   ]);
 };

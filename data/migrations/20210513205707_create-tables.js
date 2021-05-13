@@ -24,7 +24,6 @@ exports.up = function (knex) {
     })
     .createTable("steps", (tbl) => {
       tbl.increments("step_id");
-      tbl.string("step_name", 128).notNullable();
       tbl.integer("step_number").unsigned().notNullable();
       tbl.string("step_instructions", 280);
       tbl
@@ -54,7 +53,7 @@ exports.up = function (knex) {
         .inTable("steps")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
-      tbl.integer("quantity").unsigned().notNullable();
+      tbl.integer("step_ingredient_quantity").unsigned().notNullable();
     });
 };
 
@@ -63,5 +62,6 @@ exports.down = function (knex) {
     .dropTableIfExist("step_ingredient_quantities")
     .dropTableIfExist("steps")
     .dropTableIfExist("ingredients")
+    .dropTableIfExist("units")
     .dropTableIfExist("recipes");
 };
