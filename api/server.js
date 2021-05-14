@@ -1,4 +1,5 @@
 const express = require("express");
+const { getRecipeById } = require("./reciipes/recipes-model");
 const server = express();
 
 // const recipeRouter = require("./recipes/recipe-router")
@@ -7,7 +8,7 @@ server.use(express.json());
 // server.use('/api/recipes', recipeRouter)
 
 server.use("/", (_req, res) => {
-  res.send("<h2>Server under construction</h2>");
+  getRecipeById().then((recipe) => res.send(recipe));
 });
 
 // eslint-disable-next-line no-unused-vars
