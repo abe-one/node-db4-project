@@ -44,9 +44,17 @@ exports.getRecipeById = async (id) => {
     ingredientIds
   ); // query ingredients
 
-  const units = ingredients
-    .filter((ingredient, idx) => ingredients.indexOf(ingredient) === idx)
-    .map((ingredient) => ingredient.unit_id); //remove duplicate units and isolate ids
+  const unitIds = ingredients
+    .filter((igdnt, idx) => ingredients.indexOf(igdnt) === idx)
+    .map((igdnt) => igdnt.unit_id); //remove duplicate units and isolate ids
 
-  return units;
+  const units = await db("units").whereIn("unit_id", unitIds); //query units
+
+  const fullIngredients = ingredients.map((igdnt) => {
+    igdnt.unit_id = units.filter((unit) => unit.unit_id === igdnt.unit_id);
+    return igdnt;
+    //
+  });
+
+  return fullIngredients;
 };
