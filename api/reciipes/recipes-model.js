@@ -64,14 +64,16 @@ exports.getRecipeById = async (id) => {
     return fullQuant;
   }); //hammer full quantities
 
-  const fullRecipe = reducedRecipe.steps.map((step) => {
-    const ingredients = fullQuantities.filter((quant) => {
-      quant.step_id === step.step_id;
-      return quant;
-    });
-    step.ingredients = ingredients;
+  reducedRecipe.steps.forEach((step) => {
+    const ingredients = fullQuantities.filter(
+      (quant) => quant.step_id === step.step_id
+    ); //filter out any ingredients in this step
+    step.ingredients = ingredients.map((igdnt) => {
+      delete igdnt.step_id;
+      return igdnt;
+    }); //remove repeating data
     return step;
   });
 
-  return fullRecipe;
+  return reducedRecipe;
 };
