@@ -8,9 +8,9 @@ exports.getRecipeById = async (id) => {
       this.on("r.recipe_id", "s.recipe_id");
     })
     .where("r.recipe_id", 2)
-    .orderBy("s.step_number");
+    .orderBy("s.step_number"); //query recipe and steps
 
-  const reducedRecipe = await recipe.reduce(
+  const reducedRecipe = recipe.reduce(
     (acc, step) => {
       if (!acc.recipe_id) {
         acc.recipe_id = step.recipe_id;
@@ -25,17 +25,28 @@ exports.getRecipeById = async (id) => {
       return acc;
     },
     { steps: [] }
-  );
+  ); //hammer recipe into single object
   //TODO account for recipe w/ no steps
 
-  const stepIds = reducedRecipe.steps.map((s) => s.step_id);
+  const stepIds = reducedRecipe.steps.map((s) => s.step_id); //map out step keys
 
   const quantities = await db("step_ingredient_quantities").whereIn(
     "step_id",
     stepIds
-  );
+  ); //get quantities
 
-  // const ingredientIds = [...new Set(quantities.map((q)=>q.ingredient_id))]
+  const ingredientIds = quantities
+    .filter((quant, idx) => quantities.indexOf(quant) === idx)
+    .map((quant) => quant.ingredient_id); //remove duplicate ingredients and isolate ids
 
-  return quantities;
+  const ingredients = await db("ingredients").whereIn(
+    "ingredient_id",
+    ingredientIds
+  ); // query ingredients
+
+  const units = ingredients
+    .filter((ingredient, idx) => ingredients.indexOf(ingredient) === idx)
+    .map((ingredient) => ingredient.unit_id); //remove duplicate units and isolate ids
+
+  return units;
 };
