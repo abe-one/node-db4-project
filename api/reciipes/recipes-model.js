@@ -51,10 +51,27 @@ exports.getRecipeById = async (id) => {
   const units = await db("units").whereIn("unit_id", unitIds); //query units
 
   const fullIngredients = ingredients.map((igdnt) => {
-    igdnt.unit_id = units.filter((unit) => unit.unit_id === igdnt.unit_id);
+    igdnt.unit = units.find((unit) => unit.unit_id === igdnt.unit_id);
+    delete igdnt.unit_id;
     return igdnt;
-    //
+  }); //hammer full ingredients
+
+  const fullQuantities = quantities.map((quant) => {
+    const igdnt = fullIngredients.find(
+      (igdnt) => igdnt.ingredient_id === quant.ingredient_id
+    );
+    const fullQuant = { ...quant, ...igdnt };
+    return fullQuant;
+  }); //hammer full quantities
+
+  const fullRecipe = reducedRecipe.steps.map((step) => {
+    const ingredients = fullQuantities.filter((quant) => {
+      quant.step_id === step.step_id;
+      return quant;
+    });
+    step.ingredients = ingredients;
+    return step;
   });
 
-  return fullIngredients;
+  return fullRecipe;
 };
